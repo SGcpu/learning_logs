@@ -3,9 +3,10 @@
     <a href="{% url 'learning_logs:topics' %}">Topics</a><br><br>
 
     {% if user.is_authenticated %}
-        Hello {{ user.username }}.
+        Hello {{ user.username }}!.
     {% else %}
-        <a href="{% url 'accounts:login' %}">Log In</a>
+        <button name="Login"><a href="{% url 'accounts:login' %}">Log In</a></button> 
+        <button name="Register"><a href="{% url 'accounts:register' %}">Register</a></button>       
     {% endif %}
 </p>
 
