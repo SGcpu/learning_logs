@@ -1,22 +1,38 @@
-{%extends 'learning_logs/base.html' %}
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+  <h1 class="text-center text-primary py-4">{{ topic.text }}</h1>
+{% endblock page_header %}
 
 {% block content %}
+<div class="container">
 
-    <h1>Topic: {{ topic.text }}</h1>
-    
-    <h2>Entries: </h2>
-    <p><a href="{% url 'learning_logs:new_entry' topic.id%}"> Add a new Entry</a></p>
-    <ul>
-    {% for entry in entries %}
-        <li>
-            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-            <p>{{ entry.text|linebreaks }}</p>
-            <p><a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit Entry</a></p>
-        </li>
-    {% empty %}
-        <li>There are no entries for this topic yet.</li>
-    {% endfor %}
-    </ul>
+  <!-- Key action CTA: highly contrasting, prominent placement, clear label -->
+  <div class="d-flex justify-content-end mb-4">
+    <a href="{% url 'learning_logs:new_entry' topic.id %}"
+       class="btn btn-lg btn-warning shadow-lg px-4">
+      <i class="bi bi-journal-plus"></i> Add New Entry
+    </a>
+  </div>
 
-
+  {% for entry in entries %}
+    <div class="card mb-3 shadow-sm rounded">
+      <!-- Header with timestamp and clear secondary edit control -->
+      <div class="card-header d-flex justify-content-between align-items-center bg-info text-white">
+        <span>{{ entry.date_added|date:'M d, Y H:i' }}</span>
+        <a href="{% url 'learning_logs:edit_entry' entry.id %}"
+           class="btn btn-sm btn-outline-light">
+          Edit
+        </a>
+      </div>
+      <div class="card-body">
+        {{ entry.text|linebreaks }}
+      </div>
+    </div>
+  {% empty %}
+    <div class="alert alert-secondary text-center">
+      No entries yet — be the first to add!
+    </div>
+  {% endfor %}
+</div>
 {% endblock content %}

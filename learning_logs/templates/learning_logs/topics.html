@@ -1,14 +1,30 @@
 {% extends 'learning_logs/base.html' %}
 
+{% block page_header %}
+  <h1 class="text-center text-primary py-4">Explore Your Topics</h1>
+{% endblock page_header %}
+
 {% block content %}
-    <p>Topics</p>
-    <ul>
-        {% for topic in topics%}
-        <li><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic.text }}</a>
-        </li>
-        {%empty%}
-            <li>No topics have been added yet.</li>
-        {% endfor %}
-    </ul>
-    <h3><a href="{%url 'learning_logs:new_topic'%}"> Add a New topic</a></h3>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="list-group shadow-sm">
+          {% for topic in topics %}
+            <a href="{% url 'learning_logs:topic' topic.id %}" class="list-group-item list-group-item-action list-group-item-light border-0 rounded mb-2">
+              {{ topic.text }}
+            </a>
+          {% empty %}
+            <div class="list-group-item list-group-item-light border-0 rounded mb-2">
+              No topics have been added yet.
+            </div>
+          {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+          <a href="{% url 'learning_logs:new_topic' %}" class="btn btn-lg btn-success shadow-sm">
+            <i class="bi bi-plus-circle"></i> Add a New Topic
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
